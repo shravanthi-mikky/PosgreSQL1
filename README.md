@@ -201,3 +201,37 @@ SELECT emp_id, name, dept FROM company3 RIGHT JOIN department
 
 SELECT emp_id, name, dept FROM company3 FULL OUTER JOIN department
         ON company3.id = department.emp_id;
+
+
+//Function Syntax in psql
+
+CREATE [OR REPLACE] FUNCTION function_name (arguments)     
+RETURNS return_datatype   
+LANGUAGE plpgsql  
+AS $variable_name$    
+DECLARE    
+declaration;    
+[...] -- variable declaration   
+ BEGIN    
+< function_body >    
+[...]  -- logic  
+RETURN { variable_name | value }    
+END;   
+$$ 
+
+//Trigger
+
+CREATE [OR REPLACE] FUNCTION function_name ()     
+RETURNS trigger     
+AS $variable_name$    
+DECLARE    
+declaration;    
+[...] -- variable declaration   
+ BEGIN    
+< function_body >    
+[...]  -- logic  
+RETURN { variable_name | value }    
+END;   
+$$ LANGUAGE plpgsql;
+
+
