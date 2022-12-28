@@ -1,0 +1,83 @@
+created
+CREATE TABLE user_engagement_summary(
+count int,
+operations text,
+Performed_at timestamp);
+
+
+CREATE OR REPLACE FUNCTION InsertOperations()
+  RETURNS trigger AS
+$trigger_ops$
+DECLARE
+VALUE_Insert INT;
+
+BEGIN
+		VALUE_Insert=VALUE_Insert+1;
+         INSERT INTO user_engagement_summary(count,operations,Performed_at)
+         VALUES(VALUE_Insert,'Insert',current_timestamp);
+ 
+    RETURN NEW;
+END;
+$trigger_ops$
+LANGUAGE 'plpgsql';
+
+
+
+CREATE TRIGGER trigger_ops
+  AFTER INSERT
+  ON company3
+  FOR EACH ROW
+  EXECUTE PROCEDURE InsertOperations();
+
+
+// delete function
+
+CREATE OR REPLACE FUNCTION DeleteOperations()
+  RETURNS trigger AS
+$trigger_ops1$
+DECLARE
+VALUE_Delete INT;
+
+BEGIN
+		VALUE_Delete=VALUE_Delete+1;
+         INSERT INTO user_engagement_summary(count,operations,Performed_at)
+         VALUES(VALUE_Delete,'Delete',current_timestamp);
+ 
+    RETURN NEW;
+END;
+$trigger_ops1$
+LANGUAGE 'plpgsql';
+
+created
+
+CREATE TRIGGER trigger_ops1
+  AFTER DELETE
+  ON company3
+  FOR EACH ROW
+  EXECUTE PROCEDURE DeleteOperations();
+
+// Update function
+
+CREATE OR REPLACE FUNCTION UpdateOperations()
+RETURNS trigger AS
+$trigger_ops2$
+DECLARE
+VALUE_update INT;
+
+BEGIN
+		VALUE_update=VALUE_update+1;
+         INSERT INTO user_engagement_summary(count,operations,Performed_at)
+         VALUES(VALUE_update,'Update',current_timestamp);
+ 
+    RETURN NEW;
+END;
+$trigger_ops2$
+LANGUAGE 'plpgsql';
+
+created
+
+CREATE TRIGGER trigger_ops2
+  AFTER UPDATE
+  ON company3
+  FOR EACH ROW
+  EXECUTE PROCEDURE UpdateOperations();
